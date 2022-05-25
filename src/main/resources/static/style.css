@@ -168,18 +168,15 @@ body {
 }
 
 .delete-post{
-    opacity: 0;
+    visibility: hidden;
 }
-
-
 
 table.table {
     border-collapse: collapse;
-    text-align: left;
     line-height: 1.5;
-
 }
 table.table thead th {
+    text-align: center;
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
@@ -187,6 +184,7 @@ table.table thead th {
     border-bottom: 3px solid #036;
 }
 table.table tbody th {
+    text-align: center;
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
@@ -194,6 +192,7 @@ table.table tbody th {
     background: #f3f6f7;
 }
 table.table td {
+    text-align: center; !important;
     padding: 10px;
     vertical-align: top;
     border-bottom: 1px solid #ccc;

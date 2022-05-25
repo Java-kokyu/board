@@ -8,10 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    //    List<Post> findAllByOrderByModifiedAtDesc(); //수정시간 순으로 정렬
-    Page<Post> findAllByOrderByModifiedAtDesc(Pageable pageable);
+    Page<Post> findByTitleContainingOrContentsContainingOrderByModifiedAtDesc(String title, String contents, Pageable pageable);
 
-    List<Post> findByTitleContains(String title);
 
 
 }

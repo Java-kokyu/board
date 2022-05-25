@@ -20,6 +20,9 @@ public class Post extends Timestamped{
     private String username;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String contents;
 
     public Post(PostRequestDto requestDto){
