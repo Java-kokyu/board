@@ -1,25 +1,17 @@
-function genRandomName(length) {
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        let number = Math.random() * charactersLength;
-        let index = Math.floor(number);
-        result += characters.charAt(index);
-    }
-    return result;
-}
-
 function savePost(){
     let title = $('#save-title').val();
     let contents = $('#save-contents').val();
-    let username = genRandomName(10);
+    let username = $('#save-username').val();
+    let password = $('#save-password').val();
 
     let data = {
         "title": title,
         "username": username,
-        "contents": contents
+        "contents": contents,
+        "password": password
     }
+
+    console.log(data);
 
     $.ajax({
         type: "POST",
@@ -33,17 +25,17 @@ function savePost(){
     })
 }
 
-function deletePost(id){
-    if (confirm("게시글을 삭제하시겠습니까?") == true){
+function deletePost(id) {
+    if (confirm("게시글을 삭제하시겠습니까?") == true) {
         $.ajax({
             type: "DELETE",
-            url:`api/posts/${id}`,
-            success: function (response){
+            url: `api/posts/${id}`,
+            success: function (response) {
                 alert("게시글이 삭제되었습니다.")
                 window.location.reload();
             }
         })
-    }else{
+    } else {
         return;
     }
 }
@@ -76,7 +68,7 @@ function addModal(post, id){
         <footer class="modal-card-foot">
             <div class="level-right">
                 <div class="level-item">
-                    <a class="button is-link" onclick='showEditModal(${id}, ${JSON.stringify(post)})'>수정</a>
+                    <a class="button is-link" onclick='checkEditPassword(${id})'>수정</a>
                 </div>
                 <div class="level-item">
                     <a class="button is-sparta is-outlined"
@@ -87,9 +79,111 @@ function addModal(post, id){
     </div>`
 }
 
-function showEditModal(id, post){
+function checkEditPassword(id){
     $("#modal-post").removeClass("is-active");
+    $('#modal-checkPassword').empty();
+    let temp_html =  `<div class="modal-background" onclick='$("#modal-checkPassword").removeClass("is-active")'></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">비밀번호 확인</p>
+                                <button class="delete" aria-label="close" onclick='$("#modal-checkPassword").removeClass("is-active")'></button>
+                            </header>
+                            
+                            <section class="modal-card-body">           
+                                <label class="label" for="check-password">비밀번호 확인</label>
+                                <input type="password" id="check-password" class="input"
+                                       placeholder="비밀번호를 입력해주세요." value="">         
+                            </section>
+                            
+                            <footer class="modal-card-foot level-right">
+                                    <div class="level-item">
+                                        <a class="button is-link" id="checkPasswordBtn">확인</a>
+                                    </div>
+                                    <div class="level-item">
+                                        <a class="button is-sparta is-outlined"
+                                           onclick='$("#modal-checkPassword").removeClass("is-active")'>취소</a>
+                                    </div>
+                            </footer>
+                        </div>`
+    $('#modal-checkPassword').append(temp_html);
+    $('#modal-checkPassword').addClass('is-active');
+    $('#checkPasswordBtn').on("click", function (){
+        $("#modal-checkPassword").removeClass("is-active")
+        let inputPassword = $('#check-password').val();
+        let data = {
+            "id": id,
+            "password": inputPassword
+        }
+        $.ajax({
+            type: "PATCH",
+            url: `/api/posts/${id}/checkPassword`,
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response){
+                $("#modal-checkPassword").removeClass("is-active")
+                showEditModal(id, response);
+            },
+            error: function(){
+                alert("비밀번호가 일치하지 않습니다.");
+            }
+        })
+    })
+}
+
+function checkDeletePassword(id){
+    $('#modal-checkPassword').empty();
+    let temp_html =  `<div class="modal-background" onclick='$("#modal-checkPassword").removeClass("is-active")'></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">비밀번호 확인</p>
+                                <button class="delete" aria-label="close" onclick='$("#modal-checkPassword").removeClass("is-active")'></button>
+                            </header>
+                            
+                            <section class="modal-card-body">           
+                                <label class="label" for="check-password">비밀번호 확인</label>
+                                <input type="password" id="check-password" class="input"
+                                       placeholder="비밀번호를 입력해주세요." value="">         
+                            </section>
+                            
+                            <footer class="modal-card-foot level-right">
+                                    <div class="level-item">
+                                        <a class="button is-link" id="checkPasswordBtn">확인</a>
+                                    </div>
+                                    <div class="level-item">
+                                        <a class="button is-sparta is-outlined"
+                                           onclick='$("#modal-checkPassword").removeClass("is-active")'>취소</a>
+                                    </div>
+                            </footer>
+                        </div>`
+    $('#modal-checkPassword').addClass('is-active');
+    $('#modal-checkPassword').append(temp_html);
+
+    $('#checkPasswordBtn').on("click", function (){
+        $("#modal-checkPassword").removeClass("is-active")
+        let inputPassword = $('#check-password').val();
+        let data = {
+            "id": id,
+            "password": inputPassword
+        }
+        $.ajax({
+            type: "PATCH",
+            url: `/api/posts/${id}/checkPassword`,
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response){
+                $("#modal-checkPassword").removeClass("is-active")
+                deletePost(id);
+            },
+            error: function(){
+                alert("비밀번호가 일치하지 않습니다.");
+            }
+        })
+    })
+}
+
+function showEditModal(id, postEditDto){
     $("#modal-edit").addClass("is-active");
+    $("#modal-edit").empty();
     let tempHtml = `<div class="modal-background" onclick='$("#modal-edit").removeClass("is-active")'></div>
                         <div class="modal-content">
                             <div class="box">
@@ -100,7 +194,7 @@ function showEditModal(id, post){
                     
                                             <p class="control">
                                                 <input id="edit-title" class="input"
-                                                       placeholder="제목을 입력해주세요." value="${post.title}" >
+                                                       placeholder="제목을 입력해주세요." value="${postEditDto.title}" >
                                             </p>
                                         </div>
                                         <div class="field">
@@ -109,7 +203,7 @@ function showEditModal(id, post){
                                             <p class="control">
                     
                                                 <textarea rows="10" id="edit-contents" class="textarea"
-                                                          placeholder="내용을 입력해주세요.">${post.contents}</textarea>
+                                                          placeholder="내용을 입력해주세요.">${postEditDto.contents}</textarea>
                                             </p>
                                         </div>
                                         <nav class="level is-mobile">

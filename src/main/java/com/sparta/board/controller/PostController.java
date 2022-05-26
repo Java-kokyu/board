@@ -6,6 +6,8 @@ import com.sparta.board.domain.PostRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +21,10 @@ public class PostController {
         return postRepository.save(post);
     }
 
-
+    @GetMapping("/api/posts")
+    public List<Post> getPosts(){
+        return postRepository.findAll();
+    }
 
     @DeleteMapping("/api/posts/{id}")
     public Long deletePost(@PathVariable Long id){

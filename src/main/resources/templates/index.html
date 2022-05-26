@@ -10,16 +10,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta property="og:title" content="MINJI BOARD">
     <meta property="og:description" content="게시글을 업로드해보세요!">
-    <meta property="og:image" content="../static/images/image.png">
+    <meta property="og:image" content="images/image.png">
 
     <!-- Bulma CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css" integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+          integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="/style.css" rel="stylesheet">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.ico">
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -33,7 +36,6 @@
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="../static/images/logo.png" width="16px" height="16px">
             <strong class="is-sparta"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;">&nbsp;MINJI BOARD</strong>
         </a>
@@ -47,7 +49,7 @@
         <form method="GET" th:action="@{/}">
             <p class="control has-icons-left search flex">
                 <label for="search"></label>
-                <input id="search" name ="search" class="input" type="text" placeholder="Search">
+                <input id="search" name="search" class="input" type="text" placeholder="Search">
                 <span class="icon is-left">
                 <i class="fas fa-search" aria-hidden="true"></i>
                 </span>
@@ -71,6 +73,21 @@
         <div class="box">
             <article class="media">
                 <div class="media-content">
+                    <div style="display: flex">
+                        <div id="inputId" style="width: 250px; margin: 0 2rem 1rem 0">
+                            <label class="label" for="save-username">ID</label>
+                            <input id="save-username" class="input"
+                                   placeholder="아이디를 입력해주세요." value="">
+                        </div>
+
+                        <div id="inputPassword" style="width: 250px">
+                            <label class="label" for="save-password">Password</label>
+                            <input type="password" id="save-password" class="input"
+                                   placeholder="비밀번호를 입력해주세요." value="">
+                        </div>
+
+
+                    </div>
                     <div class="field">
                         <label class="label" for="save-title">제목</label>
 
@@ -121,6 +138,11 @@
 </div>
 <!--/show post-->
 
+<!--check password-->
+<div class="modal" id="modal-checkPassword">
+</div>
+<!--/check password-->
+
 <!--post list-->
 <div class="board-box">
     <table class="table">
@@ -134,12 +156,17 @@
         </tr>
         </thead>
         <tbody class="post-list text-center text-sm" id="post-list">
-        <tr th:each="post, i: ${posts}" th:id="'col'+ ${i.index}" th:onmouseover="|javascript:showDeleteBtn('${i.index}')| " th:onmouseout="|javascript:hideDeleteBtn('${i.index}')|">
-            <th style="text-align: center" th:text="${totalPost} - (${posts.pageable.pageNumber}*10 + ${i.index})" scope="row"></th>
+        <tr th:each="post, i: ${posts}" th:id="'col'+ ${i.index}"
+            th:onmouseover="|javascript:showDeleteBtn('${i.index}')| "
+            th:onmouseout="|javascript:hideDeleteBtn('${i.index}')|">
+            <th style="text-align: center" th:text="${totalPost} - (${posts.pageable.pageNumber}*10 + ${i.index})"
+                scope="row"></th>
             <td th:text="${post.title}" th:onclick="|javascript:showPost('${post.id}')|"></td>
             <td th:text="${post.username}"></td>
             <td th:text="${#strings.substring(post.modifiedAt, 0, 10)}"></td>
-            <td th:onclick="|javascript:deletePost('${post.id}')|"><i th:id="'deleteBtn'+ ${i.index}" class="fa-solid fa-circle-xmark delete-post"></i></td>
+            <td th:onclick="|javascript:checkDeletePassword('${post.id}')|"><i th:id="'deleteBtn'+ ${i.index}"
+                                                                      class="fa-solid fa-circle-xmark delete-post"></i>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -149,20 +176,24 @@
 <!--paging-->
 <footer class="px-10 py-10">
     <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <a class="pagination-previous" th:href="@{/(page=${posts.pageable.pageNumber - 1})}" th:classappend="${1 == posts.pageable.pageNumber + 1} ? 'is-disabled'">Previous</a>
-        <a class="pagination-next" th:href="@{/(page=${posts.pageable.pageNumber + 1})}" th:classappend="${posts.totalPages == posts.pageable.pageNumber + 1} ? 'is-disabled'">Next page</a>
+        <a class="pagination-previous" th:href="@{/(page=${posts.pageable.pageNumber - 1})}"
+           th:classappend="${1 == posts.pageable.pageNumber + 1} ? 'is-disabled'">Previous</a>
+        <a class="pagination-next" th:href="@{/(page=${posts.pageable.pageNumber + 1})}"
+           th:classappend="${posts.totalPages == posts.pageable.pageNumber + 1} ? 'is-disabled'">Next page</a>
         <ul class="pagination-list">
             <li><a class="pagination-link" th:href="@{/(page=${startPage - 1})}">1</a></li>
             <li><span class="pagination-ellipsis">&hellip;</span></li>
 
             <li>
-                <a class="pagination-link" th:href="@{/(page=${i - 1})}" th:classappend="${i == posts.pageable.pageNumber + 1} ? 'is-current'" th:each="i: ${#numbers.sequence(startPage, endPage)}" th:text="${i}"></a>
+                <a class="pagination-link" th:href="@{/(page=${i - 1})}"
+                   th:classappend="${i == posts.pageable.pageNumber + 1} ? 'is-current'"
+                   th:each="i: ${#numbers.sequence(startPage, endPage)}" th:text="${i}"></a>
             </li>
 
 
-
             <li><span class="pagination-ellipsis">&hellip;</span></li>
-            <li><a class="pagination-link" th:href="@{/(page=${(totalPage == 1)? 1 : totalPage - 1 })}" th:text="${totalPage}"></a></li>
+            <li><a class="pagination-link" th:href="@{/(page=${(totalPage == 1)? 1 : totalPage - 1 })}"
+                   th:text="${totalPage}"></a></li>
         </ul>
     </nav>
 </footer>
