@@ -1,5 +1,6 @@
 package com.sparta.board.security.provider;
 
+import com.auth0.jwt.JWT;
 import com.sparta.board.model.UserInfo;
 import com.sparta.board.repository.UserRepository;
 import com.sparta.board.security.UserDetailsImpl;
@@ -25,12 +26,13 @@ public class JWTAuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
         String token = (String) authentication.getPrincipal();
-        String username = jwtDecoder.decodeUsername(token);
+        String username = jwtDecoder.decodeUsername(token); // 토큰이 유효한지 검사
 
-        // TODO: API 사용시마다 매번 User DB 조회 필요
-        //  -> 해결을 위해서는 UserDetailsImpl 에 User 객체를 저장하지 않도록 수정
-        //  ex) UserDetailsImpl 에 userId, username, role 만 저장
-        //    -> JWT 에 userId, username, role 정보를 암호화/복호화하여 사용
+//         TODO: API 사용시마다 매번 User DB 조회 필요
+//          -> 해결을 위해서는 UserDetailsImpl 에 User 객체를 저장하지 않도록 수정
+//          ex) UserDetailsImpl 에 userId, username, role 만 저장
+//            -> JWT 에 userId, username, role 정보를 암호화/복호화하여 사용
+
         UserInfo user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Can't find " + username));;
         UserDetailsImpl userDetails = new UserDetailsImpl(user);

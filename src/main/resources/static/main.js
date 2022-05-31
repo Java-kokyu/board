@@ -1,17 +1,43 @@
+$(document).ready(function () {
+    if ($.cookie('token')) {
+        $.ajaxSetup({
+            headers: {
+                'Authorization': $.cookie('token')
+            }
+        })
+    }
+})
+
+
+function writePost(){
+    $.ajax({
+        type: "POST",
+        url: "/user/userinfo",
+        contentType: "application/json",
+        success: function (response) {
+            const username = response.username;
+            if (!username) {
+                window.location.href = '/user/loginView';
+            }
+            $("#modal-write").addClass("is-active")
+            $('#username').text(username + "님 환영합니다!");
+        },
+        error: function() {
+            window.location.href = '/user/loginView';
+        }
+    })
+
+}
+
+
 function savePost(){
     let title = $('#save-title').val();
     let contents = $('#save-contents').val();
-    let username = $('#save-username').val();
-    let password = $('#save-password').val();
 
     let data = {
         "title": title,
-        "username": username,
         "contents": contents,
-        "password": password
     }
-
-    console.log(data);
 
     $.ajax({
         type: "POST",
@@ -33,6 +59,9 @@ function deletePost(id) {
             success: function (response) {
                 alert("게시글이 삭제되었습니다.")
                 window.location.reload();
+            },
+            error: function (){
+                alert("계정이 일치하지 않습니다.")
             }
         })
     } else {
@@ -79,107 +108,6 @@ function addModal(post, id){
     </div>`
 }
 
-function checkEditPassword(id){
-    $("#modal-post").removeClass("is-active");
-    $('#modal-checkPassword').empty();
-    let temp_html =  `<div class="modal-background" onclick='$("#modal-checkPassword").removeClass("is-active")'></div>
-                        <div class="modal-card">
-                            <header class="modal-card-head">
-                                <p class="modal-card-title">비밀번호 확인</p>
-                                <button class="delete" aria-label="close" onclick='$("#modal-checkPassword").removeClass("is-active")'></button>
-                            </header>
-                            
-                            <section class="modal-card-body">           
-                                <label class="label" for="check-password">비밀번호 확인</label>
-                                <input type="password" id="check-password" class="input"
-                                       placeholder="비밀번호를 입력해주세요." value="">         
-                            </section>
-                            
-                            <footer class="modal-card-foot level-right">
-                                    <div class="level-item">
-                                        <a class="button is-link" id="checkPasswordBtn">확인</a>
-                                    </div>
-                                    <div class="level-item">
-                                        <a class="button is-sparta is-outlined"
-                                           onclick='$("#modal-checkPassword").removeClass("is-active")'>취소</a>
-                                    </div>
-                            </footer>
-                        </div>`
-    $('#modal-checkPassword').append(temp_html);
-    $('#modal-checkPassword').addClass('is-active');
-    $('#checkPasswordBtn').on("click", function (){
-        $("#modal-checkPassword").removeClass("is-active")
-        let inputPassword = $('#check-password').val();
-        let data = {
-            "id": id,
-            "password": inputPassword
-        } //password String
-        $.ajax({
-            type: "PATCH",
-            url: `/api/posts/${id}/checkPassword`,
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function (response){
-                $("#modal-checkPassword").removeClass("is-active")
-                showEditModal(id, response);
-            },
-            error: function(){
-                alert("비밀번호가 일치하지 않습니다.");
-            }
-        })
-    })
-}
-
-function checkDeletePassword(id){
-    $('#modal-checkPassword').empty();
-    let temp_html =  `<div class="modal-background" onclick='$("#modal-checkPassword").removeClass("is-active")'></div>
-                        <div class="modal-card">
-                            <header class="modal-card-head">
-                                <p class="modal-card-title">비밀번호 확인</p>
-                                <button class="delete" aria-label="close" onclick='$("#modal-checkPassword").removeClass("is-active")'></button>
-                            </header>
-                            
-                            <section class="modal-card-body">           
-                                <label class="label" for="check-password">비밀번호 확인</label>
-                                <input type="password" id="check-password" class="input"
-                                       placeholder="비밀번호를 입력해주세요." value="">         
-                            </section>
-                            
-                            <footer class="modal-card-foot level-right">
-                                    <div class="level-item">
-                                        <a class="button is-link" id="checkPasswordBtn">확인</a>
-                                    </div>
-                                    <div class="level-item">
-                                        <a class="button is-sparta is-outlined"
-                                           onclick='$("#modal-checkPassword").removeClass("is-active")'>취소</a>
-                                    </div>
-                            </footer>
-                        </div>`
-    $('#modal-checkPassword').addClass('is-active');
-    $('#modal-checkPassword').append(temp_html);
-
-    $('#checkPasswordBtn').on("click", function (){
-        $("#modal-checkPassword").removeClass("is-active")
-        let inputPassword = $('#check-password').val();
-        let data = {
-            "id": id,
-            "password": inputPassword
-        }
-        $.ajax({
-            type: "PATCH",
-            url: `/api/posts/${id}/checkPassword`,
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function (response){
-                $("#modal-checkPassword").removeClass("is-active")
-                deletePost(id);
-            },
-            error: function(){
-                alert("비밀번호가 일치하지 않습니다.");
-            }
-        })
-    })
-}
 
 function showEditModal(id, postEditDto){
     $("#modal-edit").addClass("is-active");

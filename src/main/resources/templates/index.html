@@ -39,10 +39,13 @@
             <strong class="is-sparta"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;">&nbsp;MINJI BOARD</strong>
         </a>
-        <p><span th:text="${username}"></span>님 안녕하세요!&nbsp;</p>
-        <form id="my_form" method="post" action="/user/logout">
-            <a id="logout-text" onclick="document.getElementById('my_form').submit();">Logout</a>
-        </form>
+        <div id="header-title-login-user">
+            <span id="username"></span>
+            <form id="my_form" method="post" action="/user/logout">
+                <a id="logout-text" onclick="document.getElementById('my_form').submit();">Logout</a>
+            </form>
+        </div>
+
     </div>
 </nav>
 <!--/navigation bar-->
@@ -50,7 +53,7 @@
 <!--hero-->
 <section class="hero is-link">
     <div class="hero-body">
-        <form method="GET" th:action="@{/posts}">
+        <form method="GET">
             <p class="control has-icons-left search flex">
                 <label for="search"></label>
                 <input id="search" name="search" class="input" type="text" placeholder="Search">
@@ -66,7 +69,7 @@
 <!--write post-->
 <div class="write-btn">
     <a class="button level-item has-text-centered" aria-label="write"
-       onclick='$("#modal-write").addClass("is-active")'> <!--모달 띄우기 -->
+       onclick='writePost()'> <!--모달 띄우기 -->
         글작성&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-pencil"
                                                             aria-hidden="true"></i></span>
     </a>
@@ -77,21 +80,6 @@
         <div class="box">
             <article class="media">
                 <div class="media-content">
-                    <div style="display: flex">
-                        <div id="inputId" style="width: 250px; margin: 0 2rem 1rem 0">
-                            <label class="label" for="save-username">ID</label>
-                            <input id="save-username" class="input"
-                                   placeholder="아이디를 입력해주세요." value="">
-                        </div>
-
-                        <div id="inputPassword" style="width: 250px">
-                            <label class="label" for="save-password">Password</label>
-                            <input type="password" id="save-password" class="input"
-                                   placeholder="비밀번호를 입력해주세요." value="">
-                        </div>
-
-
-                    </div>
                     <div class="field">
                         <label class="label" for="save-title">제목</label>
 
@@ -166,10 +154,10 @@
             <th style="text-align: center" th:text="${totalPost} - (${posts.pageable.pageNumber}*10 + ${i.index})"
                 scope="row"></th>
             <td><a th:text="${post.title}" th:href="@{/posts/{postId}(postId=${post.id})}"></a></td>
-            <td th:text="${post.username}"></td>
+            <td th:text="${post.writer}"></td>
             <td th:text="${#strings.substring(post.modifiedAt, 0, 10)}"></td>
-            <td th:onclick="|javascript:checkDeletePassword('${post.id}')|"><i th:id="'deleteBtn'+ ${i.index}"
-                                                                      class="fa-solid fa-circle-xmark delete-post"></i>
+            <td th:onclick="|javascript:deletePost('${post.id}')|"><i th:id="'deleteBtn'+ ${i.index}"
+                                                                               class="fa-solid fa-circle-xmark delete-post"></i>
             </td>
         </tr>
         </tbody>

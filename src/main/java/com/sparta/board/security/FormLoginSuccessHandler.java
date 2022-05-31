@@ -17,7 +17,7 @@ public class FormLoginSuccessHandler extends SavedRequestAwareAuthenticationSucc
         final UserDetailsImpl userDetails = ((UserDetailsImpl) authentication.getPrincipal());
         // Token 생성
         final String token = JwtTokenUtils.generateJwtToken(userDetails);
-        response.addHeader(AUTH_HEADER, TOKEN_TYPE + " " + token);
+        response.addHeader(AUTH_HEADER, TOKEN_TYPE + " " + token); //헤더에 jwt 토큰을 받음
     }
 
 }

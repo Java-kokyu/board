@@ -32,7 +32,7 @@ public class FormLoginAuthProvider implements AuthenticationProvider {
         UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException(userDetails.getUsername() + "Invalid password");
-        }
+        } //아이디와 패스워드가 일치하는지 확인
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }

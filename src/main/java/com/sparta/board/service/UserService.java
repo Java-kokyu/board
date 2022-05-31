@@ -20,18 +20,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public Map<String, String> validateHandling(Errors errors) {
-        Map<String, String> validatorResult = new HashMap<>();
-
-        for (FieldError error : errors.getFieldErrors()) {
-            String validKeyName = String.format("valid_%s", error.getField());
-            validatorResult.put(validKeyName, error.getDefaultMessage());
-        }
-
-        return validatorResult;
-    }
-
-
     public void registerUser(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
 // 회원 ID 중복 확인

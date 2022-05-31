@@ -20,8 +20,8 @@ public class PostListController {
 
     private final PostRepository postRepository;
 
-    @GetMapping("/posts")
-    public String getPosts(Model model, @PageableDefault(size = 10) Pageable pageable, @AuthenticationPrincipal UserDetailsImpl userDetails,
+    @GetMapping("/")
+    public String getPosts(Model model, @PageableDefault(size = 10) Pageable pageable,
                            @RequestParam(required = false, defaultValue = "") String search){
         Page<Post> posts = postRepository.findByTitleContainingOrContentsContainingOrderByModifiedAtDesc(search, search, pageable);
         int currentPage = posts.getPageable().getPageNumber();
@@ -35,7 +35,6 @@ public class PostListController {
         model.addAttribute("posts", posts);
         model.addAttribute("totalPost", totalPost);
         model.addAttribute("totalPage", totalPage);
-        model.addAttribute("username", userDetails.getUsername());
 
         return "index";
     }
@@ -47,7 +46,7 @@ public class PostListController {
         );
 
         model.addAttribute("title", post.getTitle());
-        model.addAttribute("username", post.getUsername());
+        model.addAttribute("username", post.getWriter());
         model.addAttribute("modifiedAt", post.getModifiedAt());
         model.addAttribute("contents", post.getContents());
         return "post";

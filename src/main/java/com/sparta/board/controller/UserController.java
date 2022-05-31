@@ -1,21 +1,25 @@
 package com.sparta.board.controller;
 
 import com.sparta.board.dto.SignupRequestDto;
+import com.sparta.board.dto.UserInfoDto;
 import com.sparta.board.model.UserInfo;
+import com.sparta.board.model.UserRoleEnum;
 import com.sparta.board.repository.UserRepository;
+import com.sparta.board.security.UserDetailsImpl;
 import com.sparta.board.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
-import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -38,6 +42,11 @@ public class UserController {
         return "signup";
     }
 
+    @PostMapping("/user/userinfo")
+    @ResponseBody
+    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return new UserInfoDto(userDetails.getUsername());
+    }
 
 
     // 회원 가입 요청 처리
@@ -65,6 +74,6 @@ public class UserController {
         }
 
         userService.registerUser(signupRequestDto);
-        return "redirect:/user/login";
+        return "redirect:/user/loginView";
     }
 }
