@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
           integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link href="/style.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -39,6 +39,10 @@
             <strong class="is-sparta"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;">&nbsp;MINJI BOARD</strong>
         </a>
+        <p><span th:text="${username}"></span>님 안녕하세요!&nbsp;</p>
+        <form id="my_form" method="post" action="/user/logout">
+            <a id="logout-text" onclick="document.getElementById('my_form').submit();">Logout</a>
+        </form>
     </div>
 </nav>
 <!--/navigation bar-->
@@ -46,7 +50,7 @@
 <!--hero-->
 <section class="hero is-link">
     <div class="hero-body">
-        <form method="GET" th:action="@{/}">
+        <form method="GET" th:action="@{/posts}">
             <p class="control has-icons-left search flex">
                 <label for="search"></label>
                 <input id="search" name="search" class="input" type="text" placeholder="Search">
@@ -161,7 +165,7 @@
             th:onmouseout="|javascript:hideDeleteBtn('${i.index}')|">
             <th style="text-align: center" th:text="${totalPost} - (${posts.pageable.pageNumber}*10 + ${i.index})"
                 scope="row"></th>
-            <td th:text="${post.title}" th:onclick="|javascript:showPost('${post.id}')|"></td>
+            <td><a th:text="${post.title}" th:href="@{/posts/{postId}(postId=${post.id})}"></a></td>
             <td th:text="${post.username}"></td>
             <td th:text="${#strings.substring(post.modifiedAt, 0, 10)}"></td>
             <td th:onclick="|javascript:checkDeletePassword('${post.id}')|"><i th:id="'deleteBtn'+ ${i.index}"

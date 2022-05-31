@@ -1,14 +1,12 @@
 package com.sparta.board.service;
 
-import com.sparta.board.domain.Post;
-import com.sparta.board.domain.PostEditRequestDto;
-import com.sparta.board.domain.PostRepository;
-import com.sparta.board.domain.PostRequestDto;
+import com.sparta.board.model.Post;
+import com.sparta.board.dto.PostEditRequestDto;
+import com.sparta.board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.awt.print.Pageable;
 
 @RequiredArgsConstructor
 @Service

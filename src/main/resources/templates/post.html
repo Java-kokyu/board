@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <!-- Webpage Title -->
+    <title>MINJI 게시판</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="MINJI BOARD">
+    <meta property="og:description" content="게시글을 업로드해보세요!">
+    <meta property="og:image" content="images/image.png">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+          integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script src="/main.js"></script>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body class="has-navbar-fixed-top">
+
+<!--navigation bar-->
+<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <strong class="is-sparta"
+                    style="font-family: 'Stylish', sans-serif;font-size: larger;">&nbsp;MINJI BOARD</strong>
+        </a>
+    </div>
+</nav>
+<!--/navigation bar-->
+
+<!--hero-->
+<section class="hero is-link">
+    <div class="hero-body">
+        <form method="GET" th:action="@{/}">
+            <p class="control has-icons-left search flex">
+                <label for="search"></label>
+                <input id="search" name="search" class="input" type="text" placeholder="Search">
+                <span class="icon is-left">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+            </p>
+        </form>
+    </div>
+</section>
+<!--/hero-->
+
+<!--post-->
+<div class="post-box">
+    <a class="level-item flex justify-right px-2 py-2">
+        <span class="icon is-small"><i class="fas fa-reply"></i></span>
+    </a>
+    <header style="border-top: #cccccc solid 1px; border-bottom: #cccccc solid 1px; background-color: aliceblue">
+        <div class="flex">
+            <p class="modal-card-title px-2 py-2" th:text="${title}"></p>
+            <p class="text-sm" th:text="${username}"></p>
+            <p class="text-sm" style="color: #cccccc" th:text="${#strings.substring(modifiedAt, 0, 10)}"></p>
+        </div>
+    </header>
+    <section class="px-2 py-2" style="min-height: 200px" th:text="${contents}">
+    </section>
+    <footer class="flex justify-right py-2" style="border-top: #cccccc solid 1px">
+
+        <a class="level-item">
+            <span class="icon is-small"><i class="fas fa-heart"></i>&nbsp;</span>
+        </a>
+        <a class="button is-link" style="margin-right: 0.5rem" onclick='checkEditPassword(${id})'>수정</a>
+        <a class="button is-outlined"
+        >취소</a>
+    </footer>
+</div>
+<!--/post-->
+
+<!--write comment-->
+<div class="comment-box py-5">
+    <p class="text-md px-2 py-2"
+       style="background-color: azure; border-top: #cccccc solid 1px; border-bottom: #cccccc solid 1px; margin-bottom: 1rem;">
+        댓글</p>
+    <article class="media">
+        <div class="media-content">
+            <div class="field">
+                <p class="control">
+                    <textarea class="textarea" placeholder="Add a comment..."></textarea>
+                </p>
+            </div>
+
+            <div class="flex justify-right">
+                <a class="button is-info">Submit</a>
+            </div>
+        </div>
+    </article>
+</div>
+
+<!--/write comment-->
+
+<!--comments list-->
+<div class="comment-box">
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>작성자</strong> <small>2020-10-20</small> <small>31m</small>
+                    <br>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque
+                    tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                </p>
+            </div>
+        </div>
+        <div class="media-right">
+            <button class="delete"></button>
+        </div>
+    </article>
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>작성자</strong> <small>2020-10-20</small> <small>31m</small>
+                    <br>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque
+                    tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                </p>
+            </div>
+        </div>
+        <div class="media-right">
+            <button class="delete"></button>
+        </div>
+    </article>
+</div>
+<!--/comments list-->
+
+</body>
+</html>

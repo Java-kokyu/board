@@ -1,0 +1,351 @@
+* > * {
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    padding-top: 3.25rem;
+}
+
+/*Global variable*/
+.text-center{
+    text-align: center;
+}
+
+.text-sm{
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+.text-md{
+    font-size: 1.5em;
+}
+
+.text-lg{
+    font-size: 2.2em;
+    line-height: 3rem;
+}
+
+.text-xl{
+    font-size: 3em;
+}
+
+.text-2xl{
+    font-size: 5em;
+}
+
+.font-blod{
+    font-weight: bold;
+}
+
+.text-outline-white{
+    text-shadow: -1px 0 #ffffff, 0 1px #ffffff, 1px 0 #ffffff, 0 -1px #ffffff;
+}
+
+.text-shadow-white{
+    text-shadow:0.5px 0.5px 0.5px #ffffff;
+}
+
+.text-shadow-purple{
+    text-shadow:1px 1px 1px #664FBE;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-row{
+    flex-direction: row;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.flex-wrap{
+    flex-wrap: wrap;
+}
+
+.flex-initial{
+    flex: 0 1 auto;
+}
+
+.flex-grow{
+    flex-grow: 1;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+.justify-right{
+    justify-content: right;
+}
+
+.text-uppercase{
+    text-transform: uppercase;
+}
+
+.container{
+    width: 100%;
+}
+
+.container-fluid{
+    width: 98%;
+}
+
+.mx-auto{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.py-2{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.py-5{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.py-10{
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+}
+
+.px-2{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.px-5{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.px-10{
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+.d-inline{
+    display: inline;
+}
+
+.d-block{
+    display: block;
+}
+
+.grid{
+    display: grid;
+}
+
+.cols-1{
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.w-100{
+    width: 100%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+/*body style*/
+
+.search{
+    max-width: 750px;
+    margin: auto;
+}
+
+.write-btn {
+    display: flex;
+    justify-content: right;
+    margin: 1rem 1rem 0 0;
+}
+
+.board-box {
+    max-width: 1000px;
+    margin: 1rem auto 1rem auto;
+}
+
+.delete-post{
+    visibility: hidden;
+}
+
+table.table {
+    border-collapse: collapse;
+    line-height: 1.5;
+}
+table.table thead th {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+table.table tbody th {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #f3f6f7;
+}
+table.table td {
+    text-align: center; !important;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+.post-list{
+    cursor: pointer;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+.post-box {
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+    padding: 1rem;
+}
+
+.comment-box {
+    width: 90%;
+    max-width: 950px;
+    margin: auto;
+    padding-bottom: 5rem;
+}
+
+/*login style*/
+#login-form {
+    width: 538px;
+    height: 710px;
+    margin: 70px auto 141px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    /*gap: 96px;*/
+    padding: 56px 0 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+}
+
+#login-title {
+    width: 303px;
+    height: 32px;
+    /*margin: 56px auto auto auto;*/
+    flex-grow: 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 32px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: -0.96px;
+    text-align: left;
+    color: #212529;
+}
+
+#login-id-btn {
+    width: 393px;
+    height: 62px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /*margin: 8px 0 0;*/
+    padding: 11px 12px;
+    border-radius: 5px;
+    border: solid 1px #212529;
+    background-color: #ffffff;
+
+    font-family: SpoqaHanSansNeo;
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    color: #414141;
+}
+
+.login-input-box {
+    border-width: 0;
+
+    width: 370px !important;
+    height: 52px;
+    margin: 14px 0 0;
+    border-radius: 5px;
+    background-color: #e9ecef;
+}
+
+.login-id-label {
+    /*width: 44.1px;*/
+    /*height: 16px;*/
+    width: 382px;
+    padding-left: 11px;
+    margin-top: 40px;
+    /*margin: 0 337.9px 14px 11px;*/
+    font-family: NotoSansCJKKR;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: -0.8px;
+    text-align: left;
+    color: #212529;
+}
+
+#login-id-submit {
+    border-width: 0;
+    width: 393px;
+    height: 62px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 40px 0 0;
+    padding: 11px 12px;
+    border-radius: 5px;
+    background-color: #15aabf;
+
+    font-family: SpoqaHanSansNeo;
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+}
+
+#logout-text {
+    position:absolute;
+    top:48px;
+    right:48px;
+    font-size: 18px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: 0.36px;
+    text-align: center;
+    color: #ffffff;
+}

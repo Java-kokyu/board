@@ -40,18 +40,18 @@ function deletePost(id) {
     }
 }
 
-function showPost(id) {
-    $("#modal-post").addClass("is-active");
-    $.ajax({
-        type: "GET",
-        url: `/api/posts/${id}`,
-        success: function (response){
-            $('#modal-post').empty();
-            let tempModal = addModal(response, id);
-            $('#modal-post').append(tempModal);
-        }
-    })
-}
+// function showPost(id) {
+//     $("#modal-post").addClass("is-active");
+//     $.ajax({
+//         type: "GET",
+//         url: `/api/posts/${id}`,
+//         success: function (response){
+//             $('#modal-post').empty();
+//             let tempModal = addModal(response, id);
+//             $('#modal-post').append(tempModal);
+//         }
+//     })
+// }
 
 function addModal(post, id){
     return `<div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
@@ -113,7 +113,7 @@ function checkEditPassword(id){
         let data = {
             "id": id,
             "password": inputPassword
-        }
+        } //password String
         $.ajax({
             type: "PATCH",
             url: `/api/posts/${id}/checkPassword`,

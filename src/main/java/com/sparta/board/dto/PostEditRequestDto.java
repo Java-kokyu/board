@@ -1,4 +1,4 @@
-package com.sparta.board.domain;
+package com.sparta.board.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

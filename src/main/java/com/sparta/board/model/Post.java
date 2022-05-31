@@ -1,5 +1,7 @@
-package com.sparta.board.domain;
+package com.sparta.board.model;
 
+import com.sparta.board.dto.PostEditRequestDto;
+import com.sparta.board.dto.PostRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

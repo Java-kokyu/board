@@ -1,8 +1,8 @@
 package com.sparta.board.controller;
 
-import com.sparta.board.domain.Post;
-import com.sparta.board.domain.PostRepository;
-import com.sparta.board.domain.PostRequestDto;
+import com.sparta.board.model.Post;
+import com.sparta.board.repository.PostRepository;
+import com.sparta.board.dto.PostRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
