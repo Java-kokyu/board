@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <!-- Webpage Title -->
+    <title>MINJI 게시판</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="MINJI BOARD">
+    <meta property="og:description" content="게시글을 업로드해보세요!">
+    <meta property="og:image" content="images/image.png">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+          integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script src="/main.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="has-navbar-fixed-top">
+
+<!--navigation bar-->
+<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <strong class="is-sparta"
+                    style="font-family: 'Stylish', sans-serif;font-size: larger;">&nbsp;MINJI BOARD</strong>
+        </a>
+    </div>
+</nav>
+<!--/navigation bar-->
+
+<!--post-->
+<div class="post-box">
+    <a class="level-item flex justify-right px-2 py-2">
+        <span class="icon is-small"><i class="fas fa-reply"></i></span>
+    </a>
+    <form>
+        <header style="border-top: #cccccc solid 1px; border-bottom: #cccccc solid 1px; background-color: aliceblue">
+            <div class="flex">
+                <input id="editTitle" type="text" class="px-2 py-2" th:value="${title}">
+            </div>
+        </header>
+        <section class="px-2 py-2" style="min-height: 200px">
+            <textarea id="editContents" th:text="${contents}"></textarea>
+    </section>
+    </form>
+    <footer class=" flex justify-right py-2" style="border-top: #cccccc solid 1px">
+
+            <a class="level-item">
+                <span class="icon is-small"><i class="fas fa-heart"></i>&nbsp;</span>
+            </a>
+            <a class="button is-link" style="margin-right: 0.5rem" th:onclick="|javascript:updatePost(${id})|">확인</a>
+            <a class="button is-outlined"
+            >취소</a>
+            </footer>
+</div>
+<!--/post-->
+
+</body>
+</html>

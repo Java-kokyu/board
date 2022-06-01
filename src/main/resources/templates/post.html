@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
           integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -29,7 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <script src="/main.js"></script>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" type="text/css"  href="/css/style.css">
 </head>
 <body class="has-navbar-fixed-top">
 
@@ -67,19 +67,19 @@
     </a>
     <header style="border-top: #cccccc solid 1px; border-bottom: #cccccc solid 1px; background-color: aliceblue">
         <div class="flex">
-            <p class="modal-card-title px-2 py-2" th:text="${title}"></p>
-            <p class="text-sm" th:text="${username}"></p>
+            <p id="title" class="modal-card-title px-2 py-2" th:text="${title}"></p>
+            <p id="writer" class="text-sm" th:text="${writer}"></p>
             <p class="text-sm" style="color: #cccccc" th:text="${#strings.substring(modifiedAt, 0, 10)}"></p>
         </div>
     </header>
-    <section class="px-2 py-2" style="min-height: 200px" th:text="${contents}">
+    <section id="contents" class="px-2 py-2" style="min-height: 200px" th:text="${contents}">
     </section>
     <footer class="flex justify-right py-2" style="border-top: #cccccc solid 1px">
 
         <a class="level-item">
             <span class="icon is-small"><i class="fas fa-heart"></i>&nbsp;</span>
         </a>
-        <a class="button is-link" style="margin-right: 0.5rem" onclick=''>수정</a>
+        <a class="button is-link" style="margin-right: 0.5rem" th:onclick="|javascript:checkEditable('${id}')|">수정</a>
         <a class="button is-outlined"
         >취소</a>
     </footer>
